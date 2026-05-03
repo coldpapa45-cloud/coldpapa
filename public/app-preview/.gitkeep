@@ -1,0 +1,5 @@
+Drop Figma-exported PNGs here:
+- dashboard.png
+- portfolio.png
+- alerts.png
+The PhoneScreen component will use them automatically.

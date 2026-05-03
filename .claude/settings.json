@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npx --yes create-next-app@latest . --typescript --tailwind --app --no-src-dir --no-eslint --no-import-alias --use-npm --yes)",
+      "Bash(mv AGENTS.md /tmp/coldpapa_AGENTS.md)",
+      "Bash(npx --yes create-next-app@latest . --typescript --tailwind --app --no-src-dir --no-eslint --import-alias '@/*' --use-npm --yes)",
+      "Bash(npm run *)",
+      "Bash(echo \"PID: $!\")",
+      "Read(//tmp/**)",
+      "Bash(curl -s -o /tmp/page.html -w \"HTTP %{http_code}\\\\nSize: %{size_download} bytes\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s http://localhost:3000/ -o /dev/null)",
+      "Bash(curl -s -o /tmp/og.png -w \"HTTP %{http_code} · %{size_download} bytes · %{content_type}\\\\n\" http://localhost:3000/opengraph-image)",
+      "Bash(kill 155753)",
+      "Bash(wait)"
+    ]
+  }
+}
