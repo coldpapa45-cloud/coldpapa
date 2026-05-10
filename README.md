@@ -16,6 +16,23 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Backend Setup
+
+Create `.env.local` from `.env.example` and fill in:
+
+```bash
+SUPABASE_URL="https://your-project.supabase.co"
+SUPABASE_SERVICE_ROLE_KEY="your-server-only-service-role-key"
+COINCAP_API_KEY="your-coincap-api-key"
+```
+
+Run `supabase/waitlist_signups.sql` in the Supabase SQL editor. The landing page uses:
+
+- `POST /api/waitlist` to validate and save waitlist signups.
+- `GET /api/market-prices` to proxy cached CoinCap prices for BTC, ETH, SOL, and USDC.
+
+Keep `SUPABASE_SERVICE_ROLE_KEY` server-only. Do not expose it as a `NEXT_PUBLIC_` variable.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

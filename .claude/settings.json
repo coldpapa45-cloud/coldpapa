@@ -13,6 +13,9 @@
       "Bash(curl -s -o /tmp/og.png -w \"HTTP %{http_code} · %{size_download} bytes · %{content_type}\\\\n\" http://localhost:3000/opengraph-image)",
       "Bash(kill 155753)",
       "Bash(wait)"
+    ],
+    "additionalDirectories": [
+      "/home/spanishfly/projects/blame/coldpapa_landing/components/sections"
     ]
   }
 }

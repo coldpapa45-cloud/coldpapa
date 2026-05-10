@@ -1,13 +1,15 @@
 import type { LucideIcon } from "lucide-react";
 import {
   Activity,
-  BellRing,
+  ArrowLeftRight,
+  BookOpen,
+  Building2,
   ChartCandlestick,
   KeyRound,
-  LineChart,
-  PieChart,
+  Lock,
+  Send,
   ShieldCheck,
-  Sparkles,
+  Smartphone,
   Wallet,
   Zap,
 } from "lucide-react";
@@ -58,55 +60,67 @@ export type TrustItem = {
 };
 
 export const trustItems: TrustItem[] = [
-  { icon: ShieldCheck, label: "Secure account controls", detail: "2FA, device review, session limits" },
-  { icon: LineChart, label: "Real-time market views", detail: "Charts, depth, momentum" },
-  { icon: BellRing, label: "Smart price alerts", detail: "Set, snooze, route to mobile" },
-  { icon: Wallet, label: "Portfolio tracking", detail: "Allocation, P&L, history" },
+  { icon: Zap, label: "Fees from 0.5%", detail: "Keep more of every trade" },
+  { icon: Activity, label: "Settle in 5 minutes", detail: "Card and mobile money" },
+  { icon: ChartCandlestick, label: "Spot, P2P and Demo", detail: "Three modes, one app" },
+  { icon: ShieldCheck, label: "PIN-protected and KYC", detail: "3-step identity verification" },
 ];
 
 export type Feature = {
   icon: LucideIcon;
   title: string;
   body: string;
-  accent: "blue" | "cyan" | "violet" | "emerald";
+  accent: "blue" | "cyan" | "violet" | "emerald" | "orange";
 };
 
 export const features: Feature[] = [
   {
-    icon: Activity,
-    title: "Real-time market data",
-    body: "Live prices, depth, and momentum across major assets, surfaced where decisions get made.",
+    icon: Wallet,
+    title: "Multi-asset wallet",
+    body: "Hold Bitcoin, Ethereum, USDT, USDC, Solana, BNB, Dogecoin, stETH, TRON, Cardano, and Chainlink in one place. Track every coin and every move in real time.",
     accent: "blue",
   },
   {
-    icon: PieChart,
-    title: "Portfolio tracking",
-    body: "See allocation, performance, and history in one calm, uncluttered view.",
+    icon: Building2,
+    title: "Buy crypto your way",
+    body: "Pay with a debit or credit card, bank transfer, mobile money, or your existing wallet balance. Pick what works fastest for you, from $1 to $20,000 per transaction.",
     accent: "cyan",
   },
   {
-    icon: BellRing,
-    title: "Smart price alerts",
-    body: "Set thresholds for price, change, or volume — and get a clean notification, not a flood.",
+    icon: ArrowLeftRight,
+    title: "Convert in one tap",
+    body: "Swap between any two supported assets with live rates. No order books, no spread games. Just a clean rate and a confirm button.",
     accent: "violet",
   },
   {
-    icon: Zap,
-    title: "Fast trading experience",
-    body: "Designed for low-friction execution: a precise order ticket, no clutter, no surprises.",
+    icon: Send,
+    title: "Send and receive",
+    body: "Move crypto to anyone, anywhere. Scan a QR code or paste an address and your funds land in seconds.",
     accent: "emerald",
   },
   {
-    icon: ChartCandlestick,
-    title: "Advanced charting",
-    body: "Candlesticks, indicators, and drawing tools when you need them — out of the way when you don't.",
+    icon: Activity,
+    title: "Real-time market data",
+    body: "Live prices, trends, and your watchlist on the Markets tab. Make decisions based on what is happening right now.",
     accent: "blue",
   },
   {
-    icon: KeyRound,
-    title: "Secure account controls",
-    body: "Two-factor authentication, device review, and session controls help you stay in command of access.",
+    icon: BookOpen,
+    title: "Demo trading",
+    body: "Practice with virtual funds before you commit a kobo. Learn the market flow without using real money, then move to live trading when you are ready.",
+    accent: "orange",
+  },
+  {
+    icon: ChartCandlestick,
+    title: "Withdraw to your bank",
+    body: "Cash out straight to a linked Nigerian bank account. UBA, Access Bank, and more. Fiat back in your hands without a middleman.",
     accent: "cyan",
+  },
+  {
+    icon: KeyRound,
+    title: "Transaction PIN and KYC",
+    body: "Every payout requires your PIN. Identity verification covers email, government ID, and BVN so the only person spending your money is you.",
+    accent: "emerald",
   },
 ];
 
@@ -118,19 +132,23 @@ export type Step = {
 export const howItWorks: Step[] = [
   {
     title: "Create your account",
-    body: "Sign up in minutes. Identity and security checks are designed to keep your account yours.",
+    body: "Email and a strong password. That is it to get started.",
   },
   {
-    title: "Track the assets you care about",
-    body: "Add a watchlist, follow markets in real time, and pin the assets that matter to you.",
+    title: "Verify your identity",
+    body: "Three short steps: confirm your email, upload a government ID, and add your BVN and address. Most users are cleared within 24 hours.",
   },
   {
-    title: "Trade or monitor on your terms",
-    body: "Use a precise order ticket when you're ready, or stay in observation mode with smart alerts.",
+    title: "Set your transaction PIN",
+    body: "A six-digit PIN that locks every withdrawal and trade. Even if someone gets your phone, they cannot get your money.",
   },
   {
-    title: "Manage your portfolio with clarity",
-    body: "Allocation, P&L, and history in one calm view — built for real-time decisions, not noise.",
+    title: "Fund your wallet",
+    body: "Link a bank account, drop in via card or mobile money, or send crypto from another wallet. From $1 to $20,000, your choice.",
+  },
+  {
+    title: "Trade, swap, send, or save",
+    body: "Use Spot, P2P, or Demo. Convert in a tap. Send to anyone. Or just hold and watch your portfolio grow.",
   },
 ];
 
@@ -141,28 +159,44 @@ export type FAQ = {
 
 export const faqs: FAQ[] = [
   {
-    q: "Is the Coldpapa app live?",
-    a: "Coldpapa is in early access. Joining the waitlist is the fastest way to get notified when new access windows open.",
+    q: "How long does it take to get verified?",
+    a: "Email verification is instant. Most users complete identity verification within 24 hours of submitting their ID and BVN.",
   },
   {
-    q: "Which assets will be supported?",
-    a: "Coldpapa is designed to focus on the most-traded crypto assets at launch. The full supported list will be shared during onboarding and launch updates.",
+    q: "What are the fees?",
+    a: "From 0.5% on wallet transfers up to 2.9% on card payments. The full table is on this page and what you see is what you pay.",
   },
   {
-    q: "Is crypto trading risky?",
-    a: "Yes. Crypto assets are volatile and trading involves real risk of loss. Coldpapa does not provide financial advice — always evaluate your own financial situation before trading.",
+    q: "Which countries can use Coldpapa?",
+    a: "190 plus countries. We are strongest in Nigeria, Ghana, and Kenya, with bank and mobile money integrations expanding regularly.",
   },
   {
-    q: "How are accounts protected?",
-    a: "Coldpapa is built with two-factor authentication, device and session review, and account activity controls so you can manage who has access and when.",
+    q: "Which cryptocurrencies are supported?",
+    a: "BTC, ETH, USDT, USDC, SOL, BNB, DOGE, stETH, TRX, ADA, and LINK at launch. New assets are added based on community demand.",
   },
   {
-    q: "Which countries will be supported?",
-    a: "Country availability is being finalized. We'll share supported regions during onboarding and as new access windows open.",
+    q: "Is Coldpapa safe?",
+    a: "Yes. Every transaction requires your six-digit PIN, all users complete a three-step KYC process, and your data is encrypted end to end.",
   },
   {
-    q: "Will Coldpapa give me trading advice?",
-    a: "No. Coldpapa is a tool for tracking markets, managing your portfolio, and acting on price moves. It does not provide financial advice or guaranteed outcomes.",
+    q: "Do I need a BVN?",
+    a: "A BVN is required for Nigerian users to comply with local KYC regulations. Users in other countries verify with a government-issued ID and address.",
+  },
+  {
+    q: "What payment methods can I use?",
+    a: "Card (debit or credit), bank transfer, mobile money, and wallet balance. Limits range from $1 to $20,000 per transaction depending on the method.",
+  },
+  {
+    q: "Can I practice before risking real money?",
+    a: "Yes. Demo Trading gives you virtual funds to practice with real market-style data before you use real money. Switch to live trading when you are ready.",
+  },
+  {
+    q: "What if I forget my PIN or password?",
+    a: "Both are recoverable from inside the app. Password reset is via email and PIN reset re-verifies your identity before issuing a new one.",
+  },
+  {
+    q: "How do I contact support?",
+    a: "Email support@coldpapa.com or reach us on Instagram and X at @coldpapax.",
   },
 ];
 
@@ -171,18 +205,80 @@ export const RISK_DISCLAIMER =
 
 export const securityPillars: { icon: LucideIcon; title: string; body: string }[] = [
   {
+    icon: Lock,
+    title: "Transaction PIN",
+    body: "Every withdrawal and trade requires a six-digit code that only you know. A stolen phone does not mean stolen funds.",
+  },
+  {
     icon: ShieldCheck,
-    title: "Two-factor authentication",
-    body: "Designed to require a second factor on sign-in and sensitive actions, so a password alone isn't enough.",
+    title: "Three-step identity verification",
+    body: "Email, government ID, and BVN aligned with Nigerian KYC requirements. Most users are cleared in under 24 hours.",
   },
   {
     icon: KeyRound,
-    title: "Encryption in transit and at rest",
-    body: "Account data is encrypted in transit with TLS, and built with modern encryption standards at rest.",
+    title: "Encrypted at rest and in transit",
+    body: "Your data is protected from device to server with modern encryption standards and TLS in transit.",
   },
   {
-    icon: Sparkles,
-    title: "Device and session controls",
-    body: "Review trusted devices, end active sessions, and stay in control of where your account is signed in.",
+    icon: Smartphone,
+    title: "Strong password requirements",
+    body: "Minimum 8 characters, mixed case, and numbers required. We will not let you cut corners on your own security.",
+  },
+  {
+    icon: Activity,
+    title: "Session controls",
+    body: "Review trusted devices, end active sessions, and log out remotely from any device on your account.",
+  },
+];
+
+export type Stat = {
+  value: string;
+  label: string;
+};
+
+export const statsData: Stat[] = [
+  { value: "11", label: "cryptocurrencies supported" },
+  { value: "4", label: "fiat currencies" },
+  { value: "190+", label: "countries" },
+  { value: "0.5%", label: "starting fee" },
+  { value: "5 min", label: "average settlement" },
+  { value: "24 hr", label: "typical KYC turnaround" },
+];
+
+export type FeeRow = {
+  method: string;
+  fee: string;
+  limits: string;
+  speed: string;
+};
+
+export const feeRows: FeeRow[] = [
+  { method: "Wallet balance", fee: "0.5%", limits: "$1 to $10,000", speed: "Instant" },
+  { method: "Mobile money", fee: "1.0%", limits: "$5 to $10,000", speed: "5 minutes" },
+  { method: "Bank transfer", fee: "1.2%", limits: "$20 to $20,000", speed: "30 minutes" },
+  { method: "Card payment", fee: "2.9%", limits: "$10 to $5,000", speed: "5 minutes" },
+];
+
+export type ValueProp = {
+  eyebrow: string;
+  title: string;
+  body: string;
+};
+
+export const valueProps: ValueProp[] = [
+  {
+    eyebrow: "Ultra-low fees",
+    title: "Keep more of every trade.",
+    body: "Pay from 0.5% on wallet transfers and as little as 1.0% on mobile money. No hidden spreads. No withdrawal traps.",
+  },
+  {
+    eyebrow: "Fast execution",
+    title: "Your money moves fast.",
+    body: "Card payments clear in about 5 minutes. Bank transfers in about 30. Wallet swaps are instant.",
+  },
+  {
+    eyebrow: "Three ways to trade",
+    title: "Go live, match peers, or practice.",
+    body: "Spot for market orders. P2P to match with real traders. Demo to sharpen your edge without using real funds. One app, three modes.",
   },
 ];

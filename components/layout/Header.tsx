@@ -9,10 +9,10 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/#features", id: "features", label: "Features" },
-  { href: "/#preview", id: "preview", label: "App preview" },
+  { href: "/#preview", id: "preview", label: "Markets" },
   { href: "/#how", id: "how", label: "How it works" },
   { href: "/#security", id: "security", label: "Security" },
-  { href: "/#faq", id: "faq", label: "FAQ" },
+  { href: "/#faq", id: "faq", label: "Support" },
 ];
 
 export function Header() {
@@ -93,12 +93,10 @@ export function Header() {
 
         <div className="ml-auto flex items-center gap-2">
           <Button asChild variant="ghost" size="sm" className="hidden md:inline-flex">
-            <a href="#waitlist">Sign in</a>
+            <a href="#waitlist">Early access</a>
           </Button>
           <Button asChild variant="primary" size="sm" className="hidden sm:inline-flex">
-            <a href="#waitlist">
-              Join waitlist
-            </a>
+            <a href="#waitlist">Join waitlist</a>
           </Button>
           <button
             aria-label={open ? "Close menu" : "Open menu"}

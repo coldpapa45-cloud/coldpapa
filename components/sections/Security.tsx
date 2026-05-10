@@ -15,7 +15,7 @@ export function Security() {
         className="pointer-events-none absolute inset-0 opacity-[0.18]"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 80% 0%, rgba(37,99,235,0.5), transparent 60%), radial-gradient(ellipse 50% 50% at 10% 100%, rgba(6,182,212,0.4), transparent 60%)",
+            "radial-gradient(ellipse 60% 50% at 80% 0%, rgba(41,108,233,0.5), transparent 60%), radial-gradient(ellipse 50% 50% at 10% 100%, rgba(0,157,251,0.4), transparent 60%)",
         }}
       />
       <div
@@ -33,14 +33,13 @@ export function Security() {
           <Reveal>
             <SectionBadge tone="dark">Security & risk</SectionBadge>
             <h2 id="security-title" className="h-section mt-4 text-white">
-              Built with security in mind. Honest about risk.
+              Your money. Your keys to it.
             </h2>
             <p className="body-lead mt-4 text-white/70">
-              Coldpapa is designed with the controls people expect from a serious financial product:
-              two-factor authentication, encryption, and device review.
+              Coldpapa is built security-first because crypto deserves nothing less.
             </p>
 
-            <div className="group mt-8 flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.07] hover:shadow-[0_18px_46px_rgba(6,182,212,0.10)]">
+            <div className="group mt-8 flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.07] hover:shadow-[0_18px_46px_rgba(0,157,251,0.10)]">
               <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white/10 text-[var(--primary-2)]">
                 <ShieldCheck className="size-4" aria-hidden="true" />
               </span>
@@ -58,7 +57,7 @@ export function Security() {
                 return (
                   <li
                     key={p.title}
-                    className="group flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.07] hover:shadow-[0_18px_46px_rgba(6,182,212,0.10)]"
+                    className="group flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.07] hover:shadow-[0_18px_46px_rgba(0,157,251,0.10)]"
                   >
                     <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-[var(--primary-2)] transition-all duration-300 group-hover:scale-105 group-hover:bg-white/15">
                       <Icon className="size-5" aria-hidden="true" />

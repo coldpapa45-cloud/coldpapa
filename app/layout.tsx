@@ -1,25 +1,27 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Sora, Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
+  weight: ["400", "600", "700"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
   display: "swap",
 });
 
-const SITE_TITLE = "Coldpapa | Crypto Trading with Real-Time Market Insight";
+const SITE_TITLE = "Coldpapa — Trade Smarter, Pay Less. Crypto for Africa's Boldest Traders.";
 const SITE_DESCRIPTION =
-  "A modern crypto trading platform for market tracking, portfolio clarity, smart alerts, and secure account controls. Join the waitlist for early access.";
+  "Buy, sell, swap, and store crypto with ultra-low fees and fast settlement. Spot, P2P, and demo trading built for Africa. Get started in minutes.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://coldpapa.example.com"),
+  metadataBase: new URL("https://coldpapa.com"),
   title: {
     default: SITE_TITLE,
     template: "%s · Coldpapa",
@@ -28,17 +30,22 @@ export const metadata: Metadata = {
   applicationName: "Coldpapa",
   keywords: [
     "crypto trading",
+    "Africa crypto app",
+    "Nigeria crypto",
+    "P2P trading",
+    "demo trading",
     "portfolio tracking",
-    "price alerts",
-    "real-time market data",
+    "NGN crypto",
+    "buy Bitcoin Nigeria",
     "cryptocurrency app",
   ],
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: SITE_TITLE,
-    description: SITE_DESCRIPTION,
+    title: "Coldpapa — Crypto trading built for Africa.",
+    description:
+      "Trade smarter, pay less. 11 cryptocurrencies, 4 fiat options, fees from 0.5%, settlement in as little as 5 minutes.",
     type: "website",
     url: "/",
     siteName: "Coldpapa",
@@ -46,8 +53,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE_TITLE,
-    description: SITE_DESCRIPTION,
+    title: "Coldpapa — Crypto trading built for Africa.",
+    description:
+      "Trade smarter, pay less. 11 cryptocurrencies, 4 fiat options, fees from 0.5%, settlement in as little as 5 minutes.",
   },
   robots: {
     index: true,
@@ -72,9 +80,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
+      className={`${sora.variable} ${inter.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col font-[family-name:var(--font-inter)]">{children}</body>
     </html>
   );
 }

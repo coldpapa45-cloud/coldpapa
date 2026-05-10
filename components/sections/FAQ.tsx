@@ -15,7 +15,7 @@ export function FAQ() {
           <SectionBadge className="mx-auto">FAQ</SectionBadge>
           <h2 id="faq-title" className="h-section mt-4">Common questions.</h2>
           <p className="body-lead mt-4">
-            Honest answers about access, security, and the realities of crypto trading.
+            Honest answers about fees, verification, security, and how Coldpapa works.
           </p>
         </Reveal>
 
@@ -23,9 +23,9 @@ export function FAQ() {
           {faqs.map((f) => (
             <details
               key={f.q}
-              className="group rounded-2xl border border-[var(--border)] bg-white px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--primary)]/30 hover:shadow-[0_14px_34px_rgba(37,99,235,0.10)] open:border-[var(--primary)]/35 open:shadow-[var(--shadow-md)]"
+              className="group rounded-2xl border border-[var(--border)] bg-white px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--primary)]/30 hover:shadow-[0_14px_34px_rgba(41,108,233,0.10)] open:border-[var(--primary)]/35 open:shadow-[var(--shadow-md)]"
             >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-lg text-left text-[0.95rem] font-semibold text-[var(--ink)] transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#2563eb24]">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-lg text-left text-[0.95rem] font-semibold text-[var(--ink)] transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#296CE924]">
                 <span>{f.q}</span>
                 <span
                   aria-hidden="true"

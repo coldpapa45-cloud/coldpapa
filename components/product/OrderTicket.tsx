@@ -29,7 +29,6 @@ export function OrderTicket({ className }: { className?: string }) {
       <div className="mt-3 rounded-xl bg-[var(--ink)] py-2.5 text-center text-sm font-semibold text-white">
         Review order
       </div>
-      <p className="mt-2 text-[10px] text-[var(--muted)]">Sample order preview · Illustrative data</p>
     </div>
   );
 }

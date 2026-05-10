@@ -4,40 +4,31 @@ import { useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { ArrowRight, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { cn } from "@/lib/utils";
+import {
+  experienceOptions,
+  interestOptions,
+  waitlistSchema,
+  type WaitlistFormValues,
+} from "@/lib/waitlist";
 
-const experienceOptions = ["Beginner", "Active", "Pro"] as const;
-const interestOptions = ["BTC", "ETH", "SOL", "Other"] as const;
+type FormValues = WaitlistFormValues;
 
-const schema = z.object({
-  email: z
-    .string()
-    .min(1, "Email is required.")
-    .email("Enter a valid email address."),
-  name: z.string().max(80).optional().or(z.literal("")),
-  experience: z.enum(experienceOptions).optional(),
-  interests: z.array(z.enum(interestOptions)).optional(),
-});
+async function submitWaitlist(values: WaitlistFormValues): Promise<void> {
+  const response = await fetch("/api/waitlist", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(values),
+  });
 
-type FormValues = z.infer<typeof schema>;
-
-/**
- * INTEGRATION POINT: replace `submitWaitlist` with a real handler.
- * Recommended options:
- *   - Resend (transactional confirmation email)
- *   - Supabase (postgres table insert via supabase-js or RPC)
- *   - Formspree / Tally (no-backend form endpoint)
- *   - Custom Next.js API route (e.g. POST /api/waitlist)
- *
- * The handler should reject (throw) on failure so the form can show an error state.
- */
-async function submitWaitlist(_values: FormValues): Promise<void> {
-  await new Promise((r) => setTimeout(r, 800));
-  return;
+  if (!response.ok) {
+    throw new Error("Waitlist signup failed.");
+  }
 }
 
 export function WaitlistForm({ className }: { className?: string }) {
@@ -51,7 +42,7 @@ export function WaitlistForm({ className }: { className?: string }) {
     setValue,
     watch,
   } = useForm<FormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(waitlistSchema),
     defaultValues: { email: "", name: "", interests: [] },
     mode: "onTouched",
   });
@@ -84,7 +75,7 @@ export function WaitlistForm({ className }: { className?: string }) {
         </div>
         <h3 className="h-card mt-4 text-[var(--ink)]">You&apos;re on the list.</h3>
         <p className="mt-2 text-sm text-[var(--ink-2)]">
-          Thanks for joining. We&apos;ll reach out as new access windows open — no spam, no noise.
+          Thanks for joining. We will reach out as new access windows open. No spam, no noise.
         </p>
       </div>
     );
@@ -206,7 +197,7 @@ export function WaitlistForm({ className }: { className?: string }) {
 
       <p className="mt-5 text-xs text-[var(--muted)]">
         Crypto assets are volatile and involve risk. Coldpapa does not provide financial advice.
-        We&apos;ll only email you about access — no spam.
+        We will only email you about access. No spam.
       </p>
 
       <div className="mt-4 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
