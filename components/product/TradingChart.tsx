@@ -50,7 +50,7 @@ export function TradingChart({
             <span className="rounded-md bg-[var(--surface-2)] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-[var(--muted)] uppercase">
               {symbol}
             </span>
-            <span className="text-[11px] text-[var(--muted)]">1D · Sample data</span>
+            <span className="text-[11px] text-[var(--muted)]">1D · Demo</span>
           </div>
           <div className="mt-1 flex items-baseline gap-2">
             <span className="mono-num text-2xl font-semibold text-[var(--ink)]">{formatUsd(price)}</span>

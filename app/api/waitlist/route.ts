@@ -1,29 +1,129 @@
 import { NextResponse } from "next/server";
-import { waitlistSchema } from "@/lib/waitlist";
+import { waitlistSchema, type WaitlistPayload } from "@/lib/waitlist";
 
 export const runtime = "nodejs";
 
-type SupabaseError = {
-  code?: string;
-  message?: string;
+const DEFAULT_WAITLIST_BACKEND_URL = "http://localhost:8000/api/v1/communications/waitlist/";
+const WAITLIST_BACKEND_TIMEOUT_MS = 8_000;
+
+type BackendErrorBody = Record<string, unknown>;
+
+type WaitlistBackendPayload = {
+  email: string;
+  name: string;
+  trading_experience: "beginner" | "active" | "pro" | "";
+  interested_assets: string[];
 };
 
-function getSupabaseConfig() {
-  const url = process.env.SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const experienceByLabel = {
+  Beginner: "beginner",
+  Active: "active",
+  Pro: "pro",
+} as const;
 
-  if (!url || !serviceRoleKey) {
-    return null;
+function getWaitlistBackendUrl(): string {
+  return process.env.WAITLIST_BACKEND_URL?.trim() || DEFAULT_WAITLIST_BACKEND_URL;
+}
+
+function getWaitlistBackendToken(): string {
+  const token = process.env.WAITLIST_BACKEND_TOKEN?.trim();
+
+  if (!token) {
+    throw new Error("WAITLIST_BACKEND_TOKEN is not configured");
   }
 
+  return token;
+}
+
+function buildBackendPayload(values: WaitlistPayload): WaitlistBackendPayload {
   return {
-    url: url.replace(/\/$/, ""),
-    serviceRoleKey,
+    email: values.email,
+    name: values.name?.trim() || "",
+    trading_experience: values.experience ? experienceByLabel[values.experience] : "",
+    interested_assets: values.interests ?? [],
   };
 }
 
+function isDuplicateSignup(status: number, body: BackendErrorBody): boolean {
+  if (status === 409) {
+    return true;
+  }
+
+  const emailError = body.email;
+  const messages = Array.isArray(emailError) ? emailError : [emailError];
+
+  return (
+    status === 400 &&
+    messages.some((message) => {
+      return typeof message === "string" && message.toLowerCase().includes("already exists");
+    })
+  );
+}
+
+async function readBackendError(response: Response): Promise<BackendErrorBody> {
+  return response.json().catch(() => ({}));
+}
+
+function extractSuccessMessage(body: BackendErrorBody): string | null {
+  const directMessage = body.message;
+  if (typeof directMessage === "string" && directMessage.trim()) {
+    return directMessage.trim();
+  }
+
+  const detail = body.detail;
+  if (typeof detail === "string" && detail.trim()) {
+    return detail.trim();
+  }
+
+  return null;
+}
+
+function extractErrorMessage(body: BackendErrorBody): string | null {
+  const directMessage = extractSuccessMessage(body);
+  if (directMessage) {
+    return directMessage;
+  }
+
+  for (const value of Object.values(body)) {
+    if (typeof value === "string" && value.trim()) {
+      return value.trim();
+    }
+
+    if (Array.isArray(value)) {
+      const firstString = value.find((item) => typeof item === "string" && item.trim());
+      if (typeof firstString === "string") {
+        return firstString.trim();
+      }
+    }
+  }
+
+  return null;
+}
+
+function sanitizeBackendStatus(status: number): number {
+  if (status >= 400 && status <= 599) {
+    return status;
+  }
+
+  return 502;
+}
+
 export async function POST(request: Request) {
-  const parsed = waitlistSchema.safeParse(await request.json().catch(() => null));
+  let json: unknown;
+
+  try {
+    json = await request.json();
+  } catch {
+    return NextResponse.json(
+      {
+        error: "invalid_json",
+        message: "Request body must be valid JSON.",
+      },
+      { status: 400 },
+    );
+  }
+
+  const parsed = waitlistSchema.safeParse(json);
 
   if (!parsed.success) {
     return NextResponse.json(
@@ -35,56 +135,86 @@ export async function POST(request: Request) {
     );
   }
 
-  const config = getSupabaseConfig();
+  let backendToken: string;
 
-  if (!config) {
+  try {
+    backendToken = getWaitlistBackendToken();
+  } catch {
     return NextResponse.json(
       {
-        error: "backend_not_configured",
-        message: "Supabase environment variables are missing.",
+        error: "server_misconfigured",
+        message: "Waitlist service is not configured.",
       },
-      { status: 503 },
+      { status: 500 },
     );
   }
 
   const values = parsed.data;
-  const userAgent = request.headers.get("user-agent");
-  const referer = request.headers.get("referer");
+  const userAgent = request.headers.get("user-agent") || null;
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  const backendPayload = buildBackendPayload(values);
 
-  const response = await fetch(`${config.url}/rest/v1/waitlist_signups`, {
-    method: "POST",
-    headers: {
-      apikey: config.serviceRoleKey,
-      Authorization: `Bearer ${config.serviceRoleKey}`,
-      "Content-Type": "application/json",
-      Prefer: "return=minimal",
-    },
-    body: JSON.stringify({
-      email: values.email,
-      name: values.name || null,
-      trading_experience: values.experience || null,
-      interested_assets: values.interests ?? [],
-      source: "landing_page",
-      referrer: referer,
-      user_agent: userAgent,
-    }),
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), WAITLIST_BACKEND_TIMEOUT_MS);
 
-  if (response.ok) {
-    return NextResponse.json({ ok: true }, { status: 201 });
+  let response: Response;
+
+  try {
+    response = await fetch(getWaitlistBackendUrl(), {
+      method: "POST",
+      signal: controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${backendToken}`,
+        ...(forwardedFor ? { "X-Forwarded-For": forwardedFor } : {}),
+        ...(userAgent ? { "User-Agent": userAgent } : {}),
+      },
+      body: JSON.stringify(backendPayload),
+    });
+  } catch {
+    return NextResponse.json(
+      {
+        error: "waitlist_backend_unreachable",
+        message: "An unexpected error occurred. Please try again.",
+      },
+      { status: 502 },
+    );
+  } finally {
+    clearTimeout(timeout);
   }
 
-  const error = (await response.json().catch(() => ({}))) as SupabaseError;
+  if (response.ok) {
+    const backendBody = await readBackendError(response);
+    const message = extractSuccessMessage(backendBody) || "Waitlist signup submitted successfully.";
 
-  if (response.status === 409 || error.code === "23505") {
-    return NextResponse.json({ ok: true, duplicate: true });
+    return NextResponse.json(
+      {
+        ok: true,
+        message,
+      },
+      { status: 201 },
+    );
+  }
+
+  const backendError = await readBackendError(response);
+
+  if (isDuplicateSignup(response.status, backendError)) {
+    return NextResponse.json(
+      {
+        ok: true,
+        duplicate: true,
+        message: extractErrorMessage(backendError) || "You are already on the waitlist.",
+      },
+      { status: 200 },
+    );
   }
 
   return NextResponse.json(
     {
-      error: "waitlist_insert_failed",
-      message: "Could not save this signup.",
+      error: "waitlist_backend_failed",
+      message: extractErrorMessage(backendError) || "Could not submit this signup.",
+      details: backendError,
     },
-    { status: 502 },
+    { status: sanitizeBackendStatus(response.status) },
   );
 }

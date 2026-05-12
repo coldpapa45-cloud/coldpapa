@@ -6,7 +6,7 @@ export function Logo({ className, tone = "light" }: { className?: string; tone?:
     <span className={cn("inline-flex items-center", className)}>
       {tone === "dark" ? (
         <Image
-          src="/full-logo-white.svg"
+          src="/logo-full-white.svg"
           alt="Coldpapa"
           width={120}
           height={28}

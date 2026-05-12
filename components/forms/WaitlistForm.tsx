@@ -17,7 +17,13 @@ import {
 
 type FormValues = WaitlistFormValues;
 
-async function submitWaitlist(values: WaitlistFormValues): Promise<void> {
+type WaitlistResponse = {
+  ok?: boolean;
+  duplicate?: boolean;
+  message?: string;
+};
+
+async function submitWaitlist(values: WaitlistFormValues): Promise<WaitlistResponse> {
   const response = await fetch("/api/waitlist", {
     method: "POST",
     headers: {
@@ -26,13 +32,20 @@ async function submitWaitlist(values: WaitlistFormValues): Promise<void> {
     body: JSON.stringify(values),
   });
 
+  const data = (await response.json().catch(() => ({}))) as WaitlistResponse;
+
   if (!response.ok) {
-    throw new Error("Waitlist signup failed.");
+    throw new Error(data.message || "Waitlist signup failed.");
   }
+
+  return data;
 }
 
 export function WaitlistForm({ className }: { className?: string }) {
   const [submitted, setSubmitted] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(
+    "Thanks for joining. We will reach out as new access windows open. No spam, no noise.",
+  );
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const {
@@ -53,10 +66,13 @@ export function WaitlistForm({ className }: { className?: string }) {
   const onSubmit = async (values: FormValues) => {
     setSubmitError(null);
     try {
-      await submitWaitlist(values);
+      const result = await submitWaitlist(values);
+      setSuccessMessage(
+        result.message || "Thanks for joining. We will reach out as new access windows open. No spam, no noise.",
+      );
       setSubmitted(true);
-    } catch {
-      setSubmitError("Something went wrong. Please try again in a moment.");
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Something went wrong. Please try again in a moment.");
     }
   };
 
@@ -75,7 +91,7 @@ export function WaitlistForm({ className }: { className?: string }) {
         </div>
         <h3 className="h-card mt-4 text-[var(--ink)]">You&apos;re on the list.</h3>
         <p className="mt-2 text-sm text-[var(--ink-2)]">
-          Thanks for joining. We will reach out as new access windows open. No spam, no noise.
+          {successMessage}
         </p>
       </div>
     );

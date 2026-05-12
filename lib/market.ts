@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache";
 import { sampleMarket, type Ticker } from "@/lib/data";
 
 export type MarketSnapshot = {
@@ -35,7 +36,7 @@ export function sampleMarketSnapshot(message?: string): MarketSnapshot {
   };
 }
 
-export async function fetchCoinCapMarket(): Promise<MarketSnapshot> {
+async function _fetchCoinCapMarket(): Promise<MarketSnapshot> {
   const token = process.env.COINCAP_API_KEY;
 
   if (!token) {
@@ -43,12 +44,18 @@ export async function fetchCoinCapMarket(): Promise<MarketSnapshot> {
   }
 
   const ids = supportedAssets.map((asset) => asset.id).join(",");
-  const response = await fetch(`https://api.coincap.io/v2/assets?ids=${ids}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    next: { revalidate: 45 },
-  });
+
+  let response: Response;
+  try {
+    response = await fetch(`https://api.coincap.io/v2/assets?ids=${ids}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      next: { revalidate: 45 },
+    });
+  } catch {
+    return sampleMarketSnapshot("CoinCap market data is temporarily unavailable.");
+  }
 
   if (!response.ok) {
     return sampleMarketSnapshot("CoinCap market data is temporarily unavailable.");
@@ -86,3 +93,9 @@ export async function fetchCoinCapMarket(): Promise<MarketSnapshot> {
     stale: false,
   };
 }
+
+export const fetchCoinCapMarket = unstable_cache(
+  _fetchCoinCapMarket,
+  ["coincap-market-prices"],
+  { revalidate: 45, tags: ["market-prices"] },
+);

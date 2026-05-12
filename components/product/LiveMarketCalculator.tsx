@@ -116,8 +116,18 @@ export function LiveMarketCalculator({
               : "bg-[var(--surface-2)] text-[var(--muted)]",
           )}
         >
-          <RefreshCw className={cn("size-3", status === "loading" && "animate-spin")} aria-hidden="true" />
-          {source === "coincap" ? "Close to live" : "Preview"}
+          {status === "loading" ? (
+            <RefreshCw className="size-3 animate-spin" aria-hidden="true" />
+          ) : (
+            <span
+              className={cn(
+                "size-1.5 rounded-full",
+                source === "coincap" ? "bg-[var(--success)] animate-pulse" : "bg-[var(--muted)]",
+              )}
+              aria-hidden="true"
+            />
+          )}
+          {source === "coincap" ? "Live" : "Demo"}
         </span>
       </div>
 
@@ -142,15 +152,16 @@ export function LiveMarketCalculator({
                 <AssetGlyph symbol={asset.symbol} size={24} />
                 <div className="min-w-0">
                   <div className="text-xs font-semibold leading-tight text-[var(--ink)]">{asset.symbol}</div>
-                  <div
-                    className={cn(
-                      "mono-num text-[10px] font-medium leading-tight",
-                      positive ? "text-[var(--success)]" : "text-[var(--danger)]",
-                    )}
-                  >
-                    {positive ? "up" : "down"} {formatPct(Math.abs(asset.change24h))}
-                  </div>
+                  <div className="text-[10px] leading-tight text-[var(--muted)] truncate">{asset.name}</div>
                 </div>
+              </div>
+              <div
+                className={cn(
+                  "mono-num mt-1 text-[10px] font-semibold",
+                  positive ? "text-[var(--success)]" : "text-[var(--danger)]",
+                )}
+              >
+                {positive ? "▲" : "▼"} {formatPct(Math.abs(asset.change24h))}
               </div>
               <div className="mono-num mt-1 text-sm font-semibold text-[var(--ink)]">
                 {formatUsd(asset.price)}
@@ -184,7 +195,8 @@ export function LiveMarketCalculator({
             <div className="text-[10px] font-medium uppercase tracking-wide text-[var(--muted)]">
               Estimated amount
             </div>
-            <div className="mono-num text-lg font-semibold text-[var(--ink)]">
+            <div className="mono-num mt-0.5 flex items-center gap-1.5 text-lg font-semibold text-[var(--primary)]">
+              <AssetGlyph symbol={selectedAsset.symbol} size={18} aria-hidden />
               {estimatedAmount.toLocaleString("en-US", {
                 maximumFractionDigits: selectedAsset.symbol === "USDC" ? 2 : 6,
               })}{" "}

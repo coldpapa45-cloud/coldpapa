@@ -82,7 +82,7 @@ export default function RootLayout({
       lang="en"
       className={`${sora.variable} ${inter.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col font-[family-name:var(--font-inter)]">{children}</body>
+      <body className="min-h-full flex flex-col font-[family-name:var(--font-inter)]" style={{ background: "#060d1f" }}>{children}</body>
     </html>
   );
 }
