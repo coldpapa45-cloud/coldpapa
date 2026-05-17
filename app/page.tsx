@@ -23,7 +23,8 @@ export default function HomePage() {
         <HowItWorks />
         <Security />
         <BuiltForAfrica />
-        <DemoTrading />
+        {/* ------ Remove Demo trading ------ */}
+        {/* <DemoTrading /> */}
         <FAQ />
         <FinalCTA />
       </main>
