@@ -8,11 +8,12 @@ export function HowItWorks() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-28">
         <Reveal className="max-w-2xl">
           <SectionBadge>How it works</SectionBadge>
-          <h2 id="how-title" className="h-section mt-4">
+          <h2 id="how-title" className="h-section mt-4 text-white">
             From sign-up to your first trade in minutes.
           </h2>
           <p className="body-lead mt-4">
-            Create an account, verify your identity, and place your first trade in five straightforward steps.
+            Create an account, verify your identity, and place your first trade
+            in five straightforward steps.
           </p>
         </Reveal>
 
@@ -31,14 +32,22 @@ export function HowItWorks() {
                   Step {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="h-card mt-2">{s.title}</h3>
-                <p className="mt-2 text-sm text-[var(--muted)] leading-relaxed">{s.body}</p>
+                <p className="mt-2 text-sm text-[var(--muted)] leading-relaxed">
+                  {s.body}
+                </p>
                 {i < howItWorks.length - 1 && (
                   <span
                     aria-hidden="true"
                     className="hidden lg:block absolute right-[-14px] top-12 text-[var(--border-strong)]"
                   >
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                      <path d="M5 4l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      <path
+                        d="M5 4l6 6-6 6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </span>
                 )}

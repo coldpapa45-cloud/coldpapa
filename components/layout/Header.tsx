@@ -12,7 +12,7 @@ const navItems = [
   { href: "/#preview", id: "preview", label: "Markets" },
   { href: "/#how", id: "how", label: "How it works" },
   { href: "/#security", id: "security", label: "Security" },
-  { href: "/#faq", id: "faq", label: "Support" }
+  { href: "/#faq", id: "faq", label: "Faq" }
 ];
 
 export function Header() {

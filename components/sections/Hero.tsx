@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, TrendingUp, Bell, Shield, Zap } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
-// Sample chart data — illustrative only
+// Sample chart data illustrative only
 const chartPoints = [
   55, 57, 54, 58, 60, 59, 58, 62, 64, 63, 61, 63, 65, 66, 64, 67, 69, 68, 67,
   69, 72, 71, 69, 72, 74, 76, 75, 74, 76, 78, 77, 79, 81, 80, 79, 81, 83, 82,
@@ -142,8 +142,8 @@ export function Hero() {
             {...fade(0.2)}
             className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/55 sm:text-lg"
           >
-            Buy, sell, swap, and send eleven top cryptocurrencies — with fees
-            from 0.5% and settlement in as little as five minutes.
+            Buy, sell, swap, and send eleven top cryptocurrencies with fees from
+            0.5% and settlement in as little as five minutes.
           </motion.p>
 
           <motion.div
@@ -288,7 +288,7 @@ function DashboardMockup({ reduced }: { reduced: boolean }) {
         </div>
 
         <div className="grid grid-cols-1 gap-0 lg:grid-cols-[220px_1fr]">
-          {/* Left sidebar — portfolio */}
+          {/* Left sidebar portfolio */}
           <div className="border-b border-white/[0.06] p-5 lg:border-b-0 lg:border-r">
             <p className="text-[10px] font-semibold uppercase tracking-widest text-white/30">
               Portfolio
@@ -343,7 +343,7 @@ function DashboardMockup({ reduced }: { reduced: boolean }) {
             </div>
           </div>
 
-          {/* Right — chart + assets */}
+          {/* Right chart + assets */}
           <div className="flex flex-col">
             {/* Chart area */}
             <div className="p-5 pb-3">

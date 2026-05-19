@@ -18,32 +18,32 @@ const demoSpark = [48, 52, 50, 55, 53, 57, 60, 58, 62, 65, 63, 68];
 const marketSpark = [62, 64, 63, 65, 67, 66, 68, 70, 69, 71, 70, 74];
 
 const cards = [
-  {
-    id: "wallet",
-    col: "lg:col-span-2",
-    icon: Wallet,
-    color: "#2563eb",
-    colorSoft: "rgba(37,99,235,0.09)",
-    label: "Multi-asset wallet",
-    body: "Hold Bitcoin, Ethereum, USDT, USDC, Solana, BNB, Dogecoin, stETH, TRON, Cardano, and Chainlink in one place. Track every coin in real time."
-  },
-  {
-    id: "market",
-    col: "lg:col-span-1",
-    icon: Activity,
-    color: "#0891b2",
-    colorSoft: "rgba(8,145,178,0.09)",
-    label: "Real-time market data",
-    body: "Live prices, trends, and your watchlist on the Markets tab. Make decisions based on what is happening right now."
-  },
+  // {
+  //   id: "wallet",
+  //   col: "lg:col-span-2",
+  //   icon: Wallet,
+  //   color: "#2563eb",
+  //   colorSoft: "rgba(37,99,235,0.09)",
+  //   label: "Multi-asset wallet",
+  //   body: "Hold Bitcoin, Ethereum, USDT, USDC, Solana, BNB, Dogecoin, stETH, TRON, Cardano, and Chainlink in one place. Track every coin in real time."
+  // },
+  // {
+  //   id: "market",
+  //   col: "lg:col-span-1",
+  //   icon: Activity,
+  //   color: "#0891b2",
+  //   colorSoft: "rgba(8,145,178,0.09)",
+  //   label: "Real-time market data",
+  //   body: "Live prices, trends, and your watchlist on the Markets tab. Make decisions based on what is happening right now."
+  // },
   {
     id: "buy",
-    col: "lg:col-span-1",
+    col: "lg:col-span-2",
     icon: Building2,
     color: "#059669",
     colorSoft: "rgba(5,150,105,0.09)",
     label: "Buy crypto your way",
-    body: "Pay with a debit card, bank transfer, or mobile money — from $1 to $20,000 per transaction."
+    body: "Pay with a debit card, bank transfer, or mobile money from $1 to $20,000 per transaction."
   },
   {
     id: "convert",
@@ -63,15 +63,15 @@ const cards = [
     label: "Send and receive",
     body: "Move crypto to anyone, anywhere. Scan a QR code or paste an address and your funds land in seconds."
   },
-  {
-    id: "demo",
-    col: "lg:col-span-2",
-    icon: BookOpen,
-    color: "#d97706",
-    colorSoft: "rgba(217,119,6,0.09)",
-    label: "Demo trading",
-    body: "Practice with virtual funds before you commit a kobo. Learn the market flow without real money, then switch to live when you are ready."
-  },
+  // {
+  //   id: "demo",
+  //   col: "lg:col-span-2",
+  //   icon: BookOpen,
+  //   color: "#d97706",
+  //   colorSoft: "rgba(217,119,6,0.09)",
+  //   label: "Demo trading",
+  //   body: "Practice with virtual funds before you commit a kobo. Learn the market flow without real money, then switch to live when you are ready."
+  // },
   {
     id: "withdraw",
     col: "lg:col-span-2",
@@ -79,7 +79,7 @@ const cards = [
     color: "#1d4ed8",
     colorSoft: "rgba(29,78,216,0.09)",
     label: "Withdraw to your bank",
-    body: "Cash out straight to UBA, Access Bank, and more. Fiat back in your hands without a middleman — same-day settlement."
+    body: "Cash out straight to UBA, Access Bank, and more. Fiat back in your hands without a middleman same-day settlement."
   },
   {
     id: "kyc",
@@ -88,7 +88,7 @@ const cards = [
     color: "#6d28d9",
     colorSoft: "rgba(109,40,217,0.09)",
     label: "Transaction PIN and KYC",
-    body: "Every payout requires your PIN. Identity verification covers email, government ID, and BVN — so only you can access your funds."
+    body: "Every payout requires your PIN. Identity verification covers email, government ID, and BVN so only you can access your funds."
   }
 ];
 
@@ -366,9 +366,9 @@ function CardVisual({ id, color }: { id: string; color: string }) {
 
   if (id === "withdraw") {
     const banks = [
-      { name: "UBA", color: "#ef4444", image: "/uba.svg" },
-      { name: "Access", color: "#1d4ed8", image: "/access.svg" },
-      { name: "GTB", color: "#f59e0b", image: "/gtb.svg" }
+      { name: "UBA", color: "#ef4444", image: "/uba.png" },
+      { name: "Access", color: "#1d4ed8", image: "/access.png" },
+      { name: "GTB", color: "#f59e0b", image: "/gtb.png" }
     ];
     return (
       <div className="flex items-center gap-2">
@@ -381,8 +381,8 @@ function CardVisual({ id, color }: { id: string; color: string }) {
               src={b.image}
               alt={b.name}
               width={120}
-              height={28}
-              className="h-7 w-auto"
+              height={8}
+              className="h-8 w-auto"
               priority
             />
           </div>
