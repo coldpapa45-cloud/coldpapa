@@ -48,7 +48,7 @@ export function AppPreview() {
 
         <Reveal className="mt-12">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8 sm:items-start">
-            {screens.map((s) => (
+            {screens.map((s, i) => (
               <figure key={s.label} className="group flex flex-col items-center">
                 <div className="relative w-full overflow-hidden rounded-3xl border border-[var(--border)] shadow-float transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_28px_64px_rgba(41,108,233,0.14)]"
                   style={{ aspectRatio: "9/18" }}
@@ -60,7 +60,7 @@ export function AppPreview() {
                     className="object-cover object-top"
                     style={{ inset: "-2px" }}
                     sizes="(max-width: 640px) 90vw, (max-width: 1024px) 33vw, 320px"
-                    priority
+                    priority={i === 0}
                   />
                 </div>
                 <figcaption className="mt-3 text-sm font-medium text-muted">
